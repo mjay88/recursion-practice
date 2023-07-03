@@ -435,15 +435,16 @@ var replaceKeysInObj = function(obj, key, newKey) {
 
   for(let k in obj){
     console.log(k, obj[k])
-     if(k === key){
-      obj[newKey] = obj[k];
-     }
-      
-     if(typeof obj[key] === "object"){
-    obj[newKey] = replaceKeysInObj(obj[k], key, newKey);
+   if(k === key ){
+    obj[newKey] = obj[k]
+    delete obj[k]
+   }
+     if(typeof obj[k] === "object"){
+  replaceKeysInObj(obj[k], key, newKey);
      }
   }
-return obj;
+  console.log(obj, 'result');
+  return obj
 };
 
 // 24. Get the first n Fibonacci numbers.  In the Fibonacci Sequence, each subsequent
