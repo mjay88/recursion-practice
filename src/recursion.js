@@ -394,15 +394,17 @@ var rMap = function(array, callback, output=[]) {
 // countKeysInObj(testobj, 'r') // 1
 // countKeysInObj(testobj, 'e') // 2
 var countKeysInObj = function(obj, key, count = 0) {
-if(obj[key] === null || obj[key] === undefined){
-  return count;
-}
+
 for(let k in obj){
- 
-  if(obj[k] !== null && obj[k] !== undefined && typeof obj[k] === "object"){
-    return countKeysInObj(obj[k], key, count)
+  console.log(k)
+  if(k === key){
+    count++
+  }
+  if(typeof obj[k] === 'object'){
+    countKeysInObj(obj[k], key, count)
   }
 }
+ return count
 
 };
 
