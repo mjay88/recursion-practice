@@ -144,14 +144,56 @@ var exponent = function(base, exp) {
 // powerOfTwo(16); // true
 // powerOfTwo(10); // false
 var powerOfTwo = function(n) {
+
+  
+
+  if(n === 0){
+    return false;
+  }
+
+
+  if(n === 1 || n === 2){
+    return true;
+  }
+  n = n / 2
+  // console.log(n);
+  return powerOfTwo(n)
+
 };
 
 // 9. Write a function that accepts a string a reverses it.
 var reverse = function(string) {
+
+ if(string.length === 0){
+  return string;
+ }
+
+return string.slice(-1) + reverse(string.slice(0, -1)); 
+
 };
 
 // 10. Write a function that determines if a string is a palindrome.
 var palindrome = function(string) {
+ if(string.length <= 1){
+  return true;
+ }
+if(string[0] === " "){
+  return palindrome(string.slice(1));
+}
+if(string[string.length - 1] === " "){
+  return palindrome(string.slice(0, -1))
+}
+ if(string[0].toLowerCase() !== string[string.length - 1].toLowerCase()){
+  return false
+ }
+
+ string = string.slice(1);
+ string = string.slice(0, -1);
+
+ return palindrome(string)
+
+
+ 
 };
 
 // 11. Write a function that returns the remainder of x divided by y without using the
@@ -159,19 +201,91 @@ var palindrome = function(string) {
 // modulo(5,2) // 1
 // modulo(17,5) // 2
 // modulo(22,6) // 4
-var modulo = function(x, y) {
-  
-};
 
+
+var modulo = function(x, y) {
+  if(x === 0 && y === 0){
+    return NaN
+  }
+  if(x === y){
+    return 0
+  }
+  if(x === 0){
+    return 0
+  }
+
+  if(y === 0){
+    return NaN
+  }
+  if(x > 0 && y > x){
+    return x
+  }
+ 
+  if(x < 0 && y > 0){
+    if(-x < y){
+      return x
+    } else{
+      return modulo(x + y, y)
+    }
+  }
+  if(x < 0 && y < x){
+    return x
+  }
+  if((x < 0 && y < 0) && x < y){
+    return modulo(x - y, y)
+  }
+
+ return modulo(x - y, y)
+}
 // 12. Write a function that multiplies two numbers without using the * operator  or
 // JavaScript's Math object.
 // ATTENTION DO NOT LEAVE COMMENTS IN THIS FUNCTION. The test is looking for any ('/').
-var multiply = function(x, y) {
-};
+var multiply = function(x, y, product = x) {
+  if(x === 0 || y === 0){
+    return 0
+  }
 
+  if(y === 1){
+    return product;
+  }
+  if(y === -1){
+    return -product
+  }
+ if(x < 0 || y < 0){
+  if(x < 0 && y > 0){
+    product = product + x
+    return multiply(x, --y, product)
+  } else if(x < 0 && y < 0) {
+    product = product + x
+    console.log(product)
+    y = y + 1
+    return multiply(x, y, product)
+  }
+ }
+
+  return multiply(x, --y, product + x) 
+
+};
+multiply(-79, 82)
 // 13. Write a function that divides two numbers without using the / operator  or
 // JavaScript's Math object.
 var divide = function(x, y) {
+
+  
+  if(x=== 0 && y === 0){
+    return NaN
+  }
+  if(y === 1){
+    return x
+  }
+  if(x < 0 || y < 0){
+    if(y < 0){
+      return divide(x - y, ++y)
+    }
+  }
+
+  return divide(x - y, --y)
+
 };
 
 // 14. Find the greatest common divisor (gcd) of two positive numbers.  The GCD of two
