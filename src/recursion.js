@@ -393,17 +393,20 @@ var rMap = function(array, callback, output=[]) {
 // var testobj = {'e': {'x':'y'}, 't':{'r': {'e':'r'}, 'p': {'y':'r'}},'y':'e'};
 // countKeysInObj(testobj, 'r') // 1
 // countKeysInObj(testobj, 'e') // 2
+//javascript passes primitive types by value, not by reference, so we need to set count to the updated count of each recursive call and
+//assign it back to the count variable.
 var countKeysInObj = function(obj, key, count = 0) {
 
 for(let k in obj){
-  console.log(k)
+  // console.log(k, obj[k])
   if(k === key){
-    count++
+    count = count + 1
   }
   if(typeof obj[k] === 'object'){
-    countKeysInObj(obj[k], key, count)
+  count = countKeysInObj(obj[k], key, count)
   }
 }
+// console.log(count, key)
  return count
 
 };
@@ -412,12 +415,35 @@ for(let k in obj){
 // var testobj = {'e': {'x':'y'}, 't':{'r': {'e':'r'}, 'p': {'y':'r'}},'y':'e'};
 // countValuesInObj(testobj, 'r') // 2
 // countValuesInObj(testobj, 'e') // 1
-var countValuesInObj = function(obj, value) {
+var countValuesInObj = function(obj, value, count = 0) {
+
+ for(const key in obj){
+  if(obj[key] === value){
+    count = count + 1;
+  }
+  if(typeof obj[key] === "object"){
+    count = countValuesInObj(obj[key], value, count)
+  }
+ }
+ return count
+
 };
 
 // 23. Find all keys in an object (and nested objects) by a provided name and rename
 // them to a provided new name while preserving the value stored at that key.
 var replaceKeysInObj = function(obj, key, newKey) {
+
+  for(let k in obj){
+    console.log(k, obj[k])
+     if(k === key){
+      obj[newKey] = obj[k];
+     }
+      
+     if(typeof obj[key] === "object"){
+    obj[newKey] = replaceKeysInObj(obj[k], key, newKey);
+     }
+  }
+return obj;
 };
 
 // 24. Get the first n Fibonacci numbers.  In the Fibonacci Sequence, each subsequent
