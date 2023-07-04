@@ -694,7 +694,7 @@ var numToText = function(str, result = "") {
 
 // 36. Return the number of times a tag occurs in the DOM.
 var tagCount = function(tag, node = document.body, count = 0) {
-    console.log(node)
+    // console.log(node)
   
     if(node.nodeName.toLowerCase() === tag){
       ++count
@@ -708,7 +708,7 @@ var tagCount = function(tag, node = document.body, count = 0) {
        count = tagCount(tag, node.children[i], count)
        }
     }
-    console.log(count)
+    // console.log(count)
 return count
 };
 
@@ -716,34 +716,23 @@ return count
 // Sample array:  [0,1,2,3,4,5,6,7,8,9,10,11,12,13,14,15]
 // console.log(binarySearch(5)) will return '5'
 
-var binarySearch = function(array, target, min, max) {
+var binarySearch = function(array, target) {
 
-  min = array[0];
-  max = array[array.length - 1]
-  //get middle
-  const middle = Math.floor((min + max) / 2)
+let middle = Math.floor(array.length / 2);
 
-  if(array.length === 1){
-    return 0;
-  }
-  if(array[middle] === target){
-    return middle
-  }
-  //if target is less than middle
-  if(target < array[middle]){
-    //reassign max to middle - 1
-    max = middle - 1;
-    //recursive call slicing off end
-   binarySearch(array.slice(middle), target, min, max)
-    //else if target is greater than middle
-  } else if(target > array[middle]){
-    //reassign min to middle + 1
-     min = middle + 1;
-     //recursive call slicing off beginning
-    binarySearch(array.slice(middle), target, min, max)
-  }
+if(array.length === 1 && array[0] !== target){
+  return null;
+}
 
+if(target === array[middle]){
+  return middle
+} else if(target < array[middle]){
+  return binarySearch(array.slice(0, middle - 1), target)
+} else if(array[middle] < target){
+  return binarySearch(array.slice(middle + 1), target)
+} else {
   return null
+}
 
 };
 
