@@ -716,22 +716,20 @@ return count
 // Sample array:  [0,1,2,3,4,5,6,7,8,9,10,11,12,13,14,15]
 // console.log(binarySearch(5)) will return '5'
 
-var binarySearch = function(array, target) {
+var binarySearch = function(array, target, start = array[0], end = array[array.length - 1]) {
 
 let middle = Math.floor(array.length / 2);
 
-if(array.length === 1 && array[0] !== target){
+if(array.length === 0 && array[0] !== target){
   return null;
 }
 
-if(target === array[middle]){
+if(array[middle] === target){
   return middle
-} else if(target < array[middle]){
-  return binarySearch(array.slice(0, middle - 1), target)
 } else if(array[middle] < target){
-  return binarySearch(array.slice(middle + 1), target)
-} else {
-  return null
+  binarySearch(array.slice(middle), target, start = middle - 1, end);
+}else if(array[middle] > target){
+  binarySearch(array.slice(0, middle), target, start, end = middle + 1);
 }
 
 };
