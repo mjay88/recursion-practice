@@ -434,7 +434,7 @@ var countValuesInObj = function(obj, value, count = 0) {
 var replaceKeysInObj = function(obj, key, newKey) {
 
   for(let k in obj){
-    console.log(k, obj[k])
+    // console.log(k, obj[k])
    if(k === key ){
     obj[newKey] = obj[k]
     delete obj[k]
@@ -443,7 +443,7 @@ var replaceKeysInObj = function(obj, key, newKey) {
   replaceKeysInObj(obj[k], key, newKey);
      }
   }
-  console.log(obj, 'result');
+  // console.log(obj, 'result');
   return obj
 };
 
@@ -693,7 +693,23 @@ var numToText = function(str, result = "") {
 // *** EXTRA CREDIT ***
 
 // 36. Return the number of times a tag occurs in the DOM.
-var tagCount = function(tag, node) {
+var tagCount = function(tag, node = document.body, count = 0) {
+    console.log(node)
+  
+    if(node.nodeName.toLowerCase() === tag){
+      ++count
+   }
+    if(node.children.length){
+       for(let i = 0; i < node.children.length; i++){
+       if(node.children[i].nodeName.toLowerCase() === tag){
+        ++count
+       }
+       if(node.children[i].children.length)
+       count = tagCount(tag, node.children[i], count)
+       }
+    }
+    console.log(count)
+return count
 };
 
 // 37. Write a function for binary search.
@@ -701,6 +717,34 @@ var tagCount = function(tag, node) {
 // console.log(binarySearch(5)) will return '5'
 
 var binarySearch = function(array, target, min, max) {
+
+  min = array[0];
+  max = array[array.length - 1]
+  //get middle
+  const middle = Math.floor((min + max) / 2)
+
+  if(array.length === 1){
+    return 0;
+  }
+  if(array[middle] === target){
+    return middle
+  }
+  //if target is less than middle
+  if(target < array[middle]){
+    //reassign max to middle - 1
+    max = middle - 1;
+    //recursive call slicing off end
+   binarySearch(array.slice(middle), target, min, max)
+    //else if target is greater than middle
+  } else if(target > array[middle]){
+    //reassign min to middle + 1
+     min = middle + 1;
+     //recursive call slicing off beginning
+    binarySearch(array.slice(middle), target, min, max)
+  }
+
+  return null
+
 };
 
 // 38. Write a merge sort function.
